@@ -7,14 +7,14 @@ app = Flask(__name__)
 
 # Configuración de MySQL
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'tu_usuario'
-app.config['MYSQL_PASSWORD'] = 'tu_contraseña'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'mechita1927'
 app.config['MYSQL_DB'] = 'monitoreo_salud'
 
 mysql = MySQL(app)
 
 # Configuración de JWT
-app.config['JWT_SECRET_KEY'] = 'tu_clave_secreta'
+app.config['JWT_SECRET_KEY'] = '123456'
 jwt = JWTManager(app)
 
 @app.route('/register', methods=['POST'])
