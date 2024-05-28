@@ -2,19 +2,20 @@ from flask import Flask, request, jsonify
 from flask_mysqldb import MySQL
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
 
 app = Flask(__name__)
 
-# Configuración de MySQL
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'mechita1927'
-app.config['MYSQL_DB'] = 'monitoreo_salud'
+# Configuración de MySQL usando variables de entorno
+app.config['MYSQL_HOST'] = os.environ.get('MYSQL_HOST', 'localhost')
+app.config['MYSQL_USER'] = os.environ.get('MYSQL_USER', 'tu_usuario')
+app.config['MYSQL_PASSWORD'] = os.environ.get('MYSQL_PASSWORD', 'tu_contraseña')
+app.config['MYSQL_DB'] = os.environ.get('MYSQL_DB', 'monitoreo_salud')
 
 mysql = MySQL(app)
 
 # Configuración de JWT
-app.config['JWT_SECRET_KEY'] = '123456'
+app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY', 'tu_clave_secreta')
 jwt = JWTManager(app)
 
 @app.route('/register', methods=['POST'])
@@ -88,4 +89,4 @@ def get_data():
     return jsonify(result)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')

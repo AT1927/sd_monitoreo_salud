@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: tu_contraseña
+      MYSQL_DATABASE: monitoreo_salud
+      MYSQL_USER: tu_usuario
+      MYSQL_PASSWORD: tu_contraseña
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  web:
+    build: .
+    container_name: flask_app
+    environment:
+      FLASK_ENV: development
+      MYSQL_HOST: db
+      MYSQL_USER: tu_usuario
+      MYSQL_PASSWORD: tu_contraseña
+      MYSQL_DB: monitoreo_salud
+      JWT_SECRET_KEY: tu_clave_secreta
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+
+volumes:
+  db_data:
